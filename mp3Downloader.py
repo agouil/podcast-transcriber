@@ -26,8 +26,8 @@ def DownloadMp3FromURL(url):
     """
 
     mp3file = urllib2.urlopen(url)
-    path = '/Users/Mark/Developer/podcast-transcriber/mp3files/test.mp3'
-    with open('/Users/Mark/Developer/podcast-transcriber/mp3files/test.mp3',
+    path = 'test.mp3'
+    with open('test.mp3',
               'wb') as output:
         output.write(mp3file.read())
     return path
@@ -49,8 +49,7 @@ def convert_to_wav(file):
 
 def main():
     path = DownloadMp3FromURL(getURLfromUser())
-    convert_to_wav(
-        '/Users/Mark/Developer/podcast-transcriber/mp3files/test.mp3')
+    convert_to_wav('test.mp3')
 
 
 if __name__ == "__main__":
