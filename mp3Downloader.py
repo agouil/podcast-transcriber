@@ -39,14 +39,12 @@ def get_url_from_user():
 
 def create_temporary_folder():
     dirpath = tempfile.mkdtemp(dir=TEMP_DIR)
-    print "Just created tmp dir at ", dirpath
+    print "Created tmp dir at ", dirpath
     return dirpath
 
 
-def create_temporary_file(directory, suffix):
-    fp = tempfile.NamedTemporaryFile(dir=directory, suffix=suffix)
-    print "Just created tmp file at ", fp.name
-    return fp
+def create_temporary_file_name(directory, suffix):
+    return directory + suffix
 
 
 def download_remote_file(url, dest):
