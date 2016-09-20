@@ -4,6 +4,7 @@ import os
 import tempfile
 import shutil
 
+
 """
 http://feeds.gimletmedia.com/~r/hearstartup/~5/sqn8_rZ3xTM/GLT6849433183.mp3
 """
@@ -102,35 +103,41 @@ def get_podcast_file(url):
     # get the podcast file
     download_remote_file(url, filepath)
 
-    # convert it to the right format
-    convert_to_raw_audio(filepath)
-
     return filepath
 
 
-def convert_to_raw_audio(filepath):
+def convert_to_raw_audio_chunks(filepath):
     """
-    Converts mp3 files to raw binary audio files (16khz mono 16bit)
+    Converts an mp3 file to raw binary audio files (16khz mono 16bit) of
+    40 seconds.
 
     Params:
         filepath (string): The path of the input file
     """
 
-    print "Converting to the raw audio format..."
+    print "Converting to raw audio format..."
 
-    new_file = filepath[:-4]
-    new_file = new_file + '.raw'
+    file_prefix = filepath[:-4]
+    file_dir = '/'.join(filepath.split('/')[:-1])
 
-    print "Output file: %s" % new_file
-
+    # convert to raw format
     subprocess.call(['sox', filepath, '--rate', '16k', '--bits', '16',
                      '--endian', 'little', '--encoding', 'signed-integer',
-                     '--channels', '1', new_file])
+                     '--channels', '1', file_prefix + '.raw',
+                     'trim', '0', '40', ':', 'newfile', ':', 'restart'])
+
+    # grab the new filepaths
+    chunks = [file_dir + f for f in os.listdir(file_dir) if '.raw' in f]
+
+    return chunks
 
 
 def main():
     create_ancillary_folders()
-    new_path = get_podcast_file(get_url_from_user())
+    filepath = get_podcast_file(get_url_from_user())
+
+    # convert file to raw audio chunks
+    chunks = convert_to_raw_audio_chunks(filepath)
 
     # assuming here a function that does transcribe & write to output
 
