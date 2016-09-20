@@ -64,7 +64,7 @@ def download_remote_file(url, dest):
     meta_info = remote_file.info()
     file_size = int(meta_info.getheaders("Content-Length")[0])
 
-    print "Downloading: %s \nBytes: %s" % (url.split('/')[-1], file_size)
+    print "Downloading: %s" % url.split('/')[-1]
 
     file_size_dl = 0
     block_sz = 8192
@@ -78,8 +78,8 @@ def download_remote_file(url, dest):
             file_size_dl += len(buf)
             local_file.write(buf)
 
-            status = r"%10d  [%3.2f%%]" % (
-                file_size_dl, file_size_dl * 100. / file_size)
+            status = r"Progress: %10d / %10d    [%3.2f%%]" % (
+                file_size_dl, file_size, file_size_dl * 100. / file_size)
             status = status + chr(8) * (len(status) + 1)
             print status,
     print "\nFile downloaded to: %s" % dest
