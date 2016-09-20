@@ -54,14 +54,17 @@ class Transcriber(object):
             filepaths (list[string]): The list of audio files.
         """
 
+        items = len(filepaths)
+
         # loop through the files and transcribe them
-        for f in filepaths:
-            print "Transcribing %s ..." % f
+        for i, f in enumerate(filepaths, start=1):
+            print "Transcribing [ %d / %d ] %s ..." % (i, items, f)
             response = self.transcribe(f)
 
             # read the response and extract the transcript
             for alternatives in response['results']:
-                self.transcript_chunks.append(alternatives[0]['transcript'])
+                self.transcript_chunks.append(
+                    alternatives['alternatives'][0]['transcript'])
 
         return self.get_transcript_str(self.transcript_chunks, glue="\n\n")
 
