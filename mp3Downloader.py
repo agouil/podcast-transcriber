@@ -49,11 +49,50 @@ def create_temporary_file(directory, suffix):
     return fp
 
 
-def download_mp3_from_url(url):
+def download_remote_file(url, dest):
     """
-    Once we have received the mp3 url from the user, we download and write it
-    in a file, in binary. This function writes always in the same file
+    Downloads a remote file to the specified location.
+
+    Params:
+        url  (string): The url of the remote file
+        dest (string): The download destination
     """
+
+    remote_file = urllib2.urlopen(url)
+    meta_info = remote_file.info()
+    file_size = int(meta_info.getheaders("Content-Length")[0])
+
+    print "Downloading: %s \n Bytes: %s" % (url.split('/')[-1], file_size)
+
+    file_size_dl = 0
+    block_sz = 8192
+
+    with open(dest, 'wb') as local_file:
+        while True:
+            buf = remote_file.read(block_sz)
+            if not buf:
+                break
+
+            file_size_dl += len(buf)
+            local_file.write(buf)
+
+            status = r"%10d  [%3.2f%%]" % (
+                file_size_dl, file_size_dl * 100. / file_size)
+            status = status + chr(8) * (len(status) + 1)
+            print status,
+
+
+def get_podcast_file(url):
+    """
+    Returns the podcast file to process in the right format. First, we download
+    the podcast from the remote location and then we convert the file to the
+    right format for the transcriber.
+
+    Params:
+        url (string): The url of the remote file
+    """
+
+    # create the download destination
     dirpath = create_temporary_folder()
 
     mp3file = urllib2.urlopen(url)
