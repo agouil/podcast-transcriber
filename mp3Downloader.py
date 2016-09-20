@@ -44,7 +44,10 @@ def create_temporary_folder():
 
 
 def create_temporary_file_name(directory, suffix):
-    return directory + suffix
+    #
+    # TODO: use OS-specific path separator
+    #
+    return directory + '/' + suffix
 
 
 def download_remote_file(url, dest):
