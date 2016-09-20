@@ -92,13 +92,13 @@ def convert_to_wav(filepath):
 def main():
     create_ancillary_folders()
     newPath = download_mp3_from_url(get_url_from_user())
-    #assuming here a function that does transcribe & write to output
+    # assuming here a function that does transcribe & write to output
     print "I have transcribed the podcast here. "
     print ""
     print "Proceeding to cleanup"
     print ""
     cleanup(path)
-    #here I need to go and delete the temp files. 
+    # here I need to go and delete the temp files.
 
 
 if __name__ == "__main__":
