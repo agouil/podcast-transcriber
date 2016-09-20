@@ -149,14 +149,19 @@ def convert_to_raw_audio_chunks(filepath):
 
 
 def main():
+    # Setting up environment
+    if not check_env_vars():
+        return
     create_ancillary_folders()
+
+    # download the podcast file
     filepath = get_podcast_file(get_url_from_user())
 
     # convert file to raw audio chunks
     chunks = convert_to_raw_audio_chunks(filepath)
 
     # transcribe chunks
-    transcriber = Transcriber()
+    transcriber = Transcriber(os.environ['GOOGLE_API_KEY'])
     transcript = transcriber.transcribe_many(chunks)
 
     with open(OUTPUT_DIR + 'transcript.txt', 'w') as output_file:
