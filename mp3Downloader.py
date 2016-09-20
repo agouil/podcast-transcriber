@@ -1,8 +1,10 @@
-import urllib2
-import subprocess
 import os
 import tempfile
+import subprocess
 import shutil
+import urllib2
+
+from transcriber import Transcriber
 
 
 """
@@ -140,14 +142,15 @@ def main():
     # convert file to raw audio chunks
     chunks = convert_to_raw_audio_chunks(filepath)
 
-    # assuming here a function that does transcribe & write to output
+    # transcribe chunks
+    transcriber = Transcriber()
+    transcript = transcriber.transcribe_many(chunks)
 
-    print "I have transcribed the podcast here. "
-    print ""
-    print "Proceeding to cleanup"
-    print ""
+    with open(OUTPUT_DIR + 'transcript.txt', 'w') as output_file:
+        output_file.write(transcript)
+
+    print "Cleaning up...\n"
     cleanup()
-    # here I need to go and delete the temp files.
 
 
 if __name__ == "__main__":
