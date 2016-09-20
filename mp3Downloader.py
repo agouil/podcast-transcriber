@@ -113,8 +113,9 @@ def convert_to_raw_audio(filepath):
     print new_file, "this the new filename without the .mp3 extension"
     new_file = new_file + '.raw'
     if os.path.exists(new_file + '.transcription.txt') is False:
-        subprocess.call(['ffmpeg', '-y', '-i', filepath, '-acodec',
-                         'pcm_s16le', '-ac', '1', '-ar', '16000', new_file])
+        subprocess.call(['sox', filepath, '--rate', '16k', '--bits', '16',
+                         '--endian', 'little', '--encoding', 'signed-integer',
+                         '--channels', '1', new_file])
 
 
 def main():
