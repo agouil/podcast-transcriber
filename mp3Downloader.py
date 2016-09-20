@@ -99,7 +99,7 @@ def get_podcast_file(url):
     download_remote_file(url, filepath)
 
     # convert it to the right format
-    convert_to_raw_audio(filepath.name)
+    convert_to_raw_audio(filepath)
 
     return filepath.name
 
