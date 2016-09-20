@@ -127,7 +127,8 @@ def convert_to_raw_audio_chunks(filepath):
                      'trim', '0', '40', ':', 'newfile', ':', 'restart'])
 
     # grab the new filepaths
-    chunks = [file_dir + f for f in os.listdir(file_dir) if '.raw' in f]
+    chunks = [os.path.join(file_dir, f)
+              for f in os.listdir(file_dir) if '.raw' in f]
 
     return chunks
 
