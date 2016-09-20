@@ -92,34 +92,26 @@ def get_podcast_file(url):
 
     # create the download destination
     dirpath = create_temporary_folder()
-
-    mp3file = urllib2.urlopen(url)
     mp3_uid = url.split('/')[-1:]
-    print mp3_uid
+    filepath = create_temporary_file_name(dirpath, mp3_uid[0])
 
-    filepath = create_temporary_file(dirpath, mp3_uid[0])
-    print filepath.name, "this is the filepath"
+    download_remote_file(url, filepath)
 
-    with open(filepath.name, 'wb') as output:
-        output.write(mp3file.read())
-        if not os.path.exists(filepath.name):
-            print "Failed to write mp3 in ", filepath
-        convert_to_wav(filepath.name)
+    convert_to_raw_audio(filepath.name)
 
     return filepath.name
 
 
-def convert_to_wav(filepath):
+def convert_to_raw_audio(filepath):
     """
-    Converts files to a format that pocketsphinx can deal with
-    (16khz mono 16bit wav)
+    Converts mp3 files to raw binary audio files (16khz mono 16bit)
     """
 
     print filepath
 
     new_file = filepath[:-4]
     print new_file, "this the new filename without the .mp3 extension"
-    new_file = new_file + '.wav'
+    new_file = new_file + '.raw'
     if os.path.exists(new_file + '.transcription.txt') is False:
         subprocess.call(['ffmpeg', '-y', '-i', filepath, '-acodec',
                          'pcm_s16le', '-ac', '1', '-ar', '16000', new_file])
@@ -127,8 +119,10 @@ def convert_to_wav(filepath):
 
 def main():
     create_ancillary_folders()
-    new_path = download_mp3_from_url(get_url_from_user())
+    new_path = get_podcast_file(get_url_from_user())
+
     # assuming here a function that does transcribe & write to output
+
     print "I have transcribed the podcast here. "
     print ""
     print "Proceeding to cleanup"
