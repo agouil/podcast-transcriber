@@ -95,8 +95,10 @@ def get_podcast_file(url):
     mp3_uid = url.split('/')[-1:]
     filepath = create_temporary_file_name(dirpath, mp3_uid[0])
 
+    # get the podcast file
     download_remote_file(url, filepath)
 
+    # convert it to the right format
     convert_to_raw_audio(filepath.name)
 
     return filepath.name
