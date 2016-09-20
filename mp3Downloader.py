@@ -101,7 +101,7 @@ def get_podcast_file(url):
     # convert it to the right format
     convert_to_raw_audio(filepath)
 
-    return filepath.name
+    return filepath
 
 
 def convert_to_raw_audio(filepath):
