@@ -15,6 +15,19 @@ TEMP_DIR = './tmp'
 OUTPUT_DIR = './output'
 
 
+def check_env_vars():
+    """
+    Checks if all necessary ENV variables are set. If not, prints
+    an error message.
+    """
+
+    if 'GOOGLE_API_KEY' not in os.environ:
+        print "Google API key is missing.\n" \
+            + "To add run `export GOOGLE_API_KEY=<your-api-key>"
+        return False
+    return True
+
+
 def cleanup():
     shutil.rmtree(TEMP_DIR)
 
