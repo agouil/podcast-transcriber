@@ -105,17 +105,21 @@ def get_podcast_file(url):
 def convert_to_raw_audio(filepath):
     """
     Converts mp3 files to raw binary audio files (16khz mono 16bit)
+
+    Params:
+        filepath (string): The path of the input file
     """
 
-    print filepath
+    print "Converting to the raw audio format..."
 
     new_file = filepath[:-4]
-    print new_file, "this the new filename without the .mp3 extension"
     new_file = new_file + '.raw'
-    if os.path.exists(new_file + '.transcription.txt') is False:
-        subprocess.call(['sox', filepath, '--rate', '16k', '--bits', '16',
-                         '--endian', 'little', '--encoding', 'signed-integer',
-                         '--channels', '1', new_file])
+
+    print "Output file: %s" % new_file
+
+    subprocess.call(['sox', filepath, '--rate', '16k', '--bits', '16',
+                     '--endian', 'little', '--encoding', 'signed-integer',
+                     '--channels', '1', new_file])
 
 
 def main():
