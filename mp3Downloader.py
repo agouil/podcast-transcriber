@@ -106,7 +106,7 @@ def download_remote_file(url, dest):
             file_size_dl += len(buf)
             local_file.write(buf)
 
-            status = r"Progress: %10d / %10d    [%3.2f%%]" % (
+            status = r"Progress: %d / %d    [%3.2f%%]" % (
                 file_size_dl, file_size, file_size_dl * 100. / file_size)
             status = status + chr(8) * (len(status) + 1)
             print status,
