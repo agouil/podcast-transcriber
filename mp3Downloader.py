@@ -66,6 +66,19 @@ def create_temporary_file_name(directory, suffix):
     return directory + '/' + suffix
 
 
+def write_output_file(filename, contents):
+    """
+    Writes an output file to the directory defined by OUTPUT_DIR variable.
+
+    Params:
+        filename (string): The output file name
+        contents (string): The contents of the file
+    """
+
+    with open(OUTPUT_DIR + filename + '.txt', 'w') as output_file:
+        output_file.write(contents)
+
+
 def download_remote_file(url, dest):
     """
     Downloads a remote file to the specified location.
@@ -164,8 +177,9 @@ def main():
     transcriber = Transcriber(os.environ['GOOGLE_API_KEY'])
     transcript = transcriber.transcribe_many(chunks)
 
-    with open(OUTPUT_DIR + 'transcript.txt', 'w') as output_file:
-        output_file.write(transcript)
+    # write to the output file
+    output_file_name = filepath.split('/')[-1]
+    write_output_file(output_file_name, transcript)
 
     print "Cleaning up...\n"
     cleanup()
