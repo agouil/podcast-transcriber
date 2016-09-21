@@ -11,8 +11,9 @@ from transcriber import Transcriber
 http://feeds.gimletmedia.com/~r/hearstartup/~5/sqn8_rZ3xTM/GLT6849433183.mp3
 """
 
-TEMP_DIR = './tmp'
-OUTPUT_DIR = './output'
+TEMP_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'tmp')
+OUTPUT_DIR = os.path.join(
+    os.path.dirname(os.path.realpath(__file__)), 'output')
 
 
 def check_env_vars():
@@ -54,16 +55,25 @@ def get_url_from_user():
 
 
 def create_temporary_folder():
+    """
+    Creates a temporary directory to store all the intermediate files.
+    """
+
     dirpath = tempfile.mkdtemp(dir=TEMP_DIR)
     print "Created tmp dir at ", dirpath
     return dirpath
 
 
 def create_temporary_file_name(directory, suffix):
-    #
-    # TODO: use OS-specific path separator
-    #
-    return directory + '/' + suffix
+    """
+    Creates a temporary file name.
+
+    Params:
+        directory (string): The directory of the temp file
+        suffix (string): The temp file name
+    """
+
+    return os.path.join(directory, suffix)
 
 
 def write_output_file(filename, contents):
@@ -75,7 +85,7 @@ def write_output_file(filename, contents):
         contents (string): The contents of the file
     """
 
-    with open(OUTPUT_DIR + filename + '.txt', 'w') as output_file:
+    with open(os.path.join(OUTPUT_DIR, filename + '.txt'), 'w') as output_file:
         output_file.write(contents)
 
 
@@ -146,7 +156,7 @@ def convert_to_raw_audio_chunks(filepath):
     print "Converting to raw audio format..."
 
     file_prefix = filepath[:-4]
-    file_dir = '/'.join(filepath.split('/')[:-1])
+    file_dir = os.path.split(filepath)[0]
 
     # convert to raw format
     subprocess.call(['sox', filepath, '--rate', '16k', '--bits', '16',
@@ -178,7 +188,7 @@ def main():
     transcript = transcriber.transcribe_many(chunks)
 
     # write to the output file
-    output_file_name = filepath.split('/')[-1]
+    output_file_name = os.path.split(filepath)[-1]
     write_output_file(output_file_name, transcript)
 
     print "Cleaning up...\n"
