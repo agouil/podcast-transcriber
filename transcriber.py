@@ -66,7 +66,7 @@ class Transcriber(object):
                 self.transcript_chunks.append(
                     alternatives['alternatives'][0]['transcript'])
 
-        return self.get_transcript_str(self.transcript_chunks, glue="\n\n")
+        return self.get_transcript_str()
 
     def get_transcript_str(self, glue=""):
         """
