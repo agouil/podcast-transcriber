@@ -31,9 +31,9 @@ SET GOOGLE_API_KEY=<your-api-key>
 
 Go to the project's directory and run the `podcast_transcriber.py` file with Python.
 ```
-python podcast_transcriber.py
+python podcast_transcriber.py input_file
 ```
-The script will ask you to provide an audio file URL. E.g. For a podcast, you can provide the MP3 file found in a podcast's RSS Feed.
+The argument `input_file` is the input audio file URL. E.g. For a podcast, you can provide the MP3 file found in a podcast's RSS Feed.
 
 Then the script downloads the file and converts it to smaller files of 40 seconds length each of raw audio bytes through SoX. This is the format the Google Speech API requires - 16-bit 16KHz Linear PCM.
 
