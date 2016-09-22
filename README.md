@@ -55,7 +55,16 @@ For each file, the script gets the transcript from the Google Speech API. In the
 For testing the script you can use this small audio file - https://archive.org/download/testmp3testfile/mpthreetest.mp3
 
 ## Contributing
-Pull requests are welcome!
+Fork the repository, make necessary changes, run tests and submit a pull request.
+
+### Testing
+Before running tests, install the necessary requirements with:
+```
+pip install -r requirements_tests.txt
+```
+
+Run tests with `nosetests` command.
+
 
 ## Issues
 To submit any issues, raise an issue through the [Issues Page](https://github.com/agouil/wa-share/issues)
