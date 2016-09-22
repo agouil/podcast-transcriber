@@ -1,4 +1,3 @@
-import argparse
 import os
 import subprocess
 
@@ -55,14 +54,21 @@ def convert_to_raw_audio_chunks(filepath):
     return chunks
 
 
-def main(input_file):
+def transcribe(input_file_url):
+    """
+    Transcribes an audio file. The audio file format is a URL.
+
+    Params:
+        input_file_url (string): The input audio file URL
+    """
+
     # Setting up environment
     if not utilities.check_env_vars():
         return
     utilities.create_ancillary_folders()
 
     # download the podcast file
-    filepath = get_podcast_file(input_file)
+    filepath = get_podcast_file(input_file_url)
 
     # convert file to raw audio chunks
     chunks = convert_to_raw_audio_chunks(filepath)
@@ -77,12 +83,3 @@ def main(input_file):
 
     print "Cleaning up...\n"
     utilities.cleanup()
-
-
-if __name__ == "__main__":
-    # parse the CLI arguments
-    parser = argparse.ArgumentParser(prog="python podcast_transcriber.py")
-    parser.add_argument("input_file", help="input audio file")
-    args = parser.parse_args()
-
-    main(args.input_file)
