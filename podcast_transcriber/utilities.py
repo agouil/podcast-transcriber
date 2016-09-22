@@ -5,8 +5,7 @@ import urllib2
 
 
 TEMP_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'tmp')
-OUTPUT_DIR = os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), 'output')
+OUTPUT_DIR = os.path.join(os.getcwd(), 'output')
 
 
 def check_env_vars():
