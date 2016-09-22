@@ -3,7 +3,7 @@ import unittest
 
 from mock import patch
 
-from mp3Downloader import (
+from podcast_transcriber.utilities import (
     check_env_vars,
     create_temporary_file_name,
     create_temporary_folder

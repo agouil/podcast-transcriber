@@ -1,6 +1,6 @@
 import unittest
 
-from transcriber import Transcriber
+from podcast_transcriber.transcriber import Transcriber
 
 
 class TranscriberTest(unittest.TestCase):
