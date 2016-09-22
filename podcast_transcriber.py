@@ -1,26 +1,10 @@
+import argparse
 import os
 import subprocess
 
 import utilities
 
 from transcriber import Transcriber
-
-
-"""
-http://feeds.gimletmedia.com/~r/hearstartup/~5/sqn8_rZ3xTM/GLT6849433183.mp3
-"""
-
-
-def get_url_from_user():
-    """
-    Function that a URL to be passed as a parameter from the terminal.
-    The URL should contain an mp3 file to be downloaded
-    """
-
-    url = raw_input(
-        "Please enter the URL of the podcast you'd like to transcribe. ")
-    print "You just entered: ", url
-    return url
 
 
 def get_podcast_file(url):
@@ -71,14 +55,14 @@ def convert_to_raw_audio_chunks(filepath):
     return chunks
 
 
-def main():
+def main(input_file):
     # Setting up environment
     if not utilities.check_env_vars():
         return
     utilities.create_ancillary_folders()
 
     # download the podcast file
-    filepath = get_podcast_file(get_url_from_user())
+    filepath = get_podcast_file(input_file)
 
     # convert file to raw audio chunks
     chunks = convert_to_raw_audio_chunks(filepath)
@@ -96,4 +80,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # parse the CLI arguments
+    parser = argparse.ArgumentParser(prog="python podcast_transcriber.py")
+    parser.add_argument("input_file", help="input audio file")
+    args = parser.parse_args()
+
+    main(args.input_file)
