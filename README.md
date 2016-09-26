@@ -67,7 +67,7 @@ Run tests with `nosetests` command.
 
 
 ## Issues
-To submit any issues, raise an issue through the [Issues Page](https://github.com/agouil/wa-share/issues)
+To submit any issues, raise an issue through the [Issues Page](https://github.com/agouil/podcast-transcriber/issues)
 
 ## License
 [MIT](LICENSE)
