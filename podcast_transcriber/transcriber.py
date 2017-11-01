@@ -16,7 +16,7 @@ class Transcriber(object):
         Get the Google Speech service.
         """
 
-        return discovery.build('speech', 'v1beta1', developerKey=self.api_key)
+        return discovery.build('speech', 'v1', developerKey=self.api_key)
 
     def transcribe(self, filepath):
         """
