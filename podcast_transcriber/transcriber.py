@@ -32,12 +32,13 @@ class Transcriber(object):
             speech_content = base64.b64encode(speech.read())
 
         service = self.get_speech_service()
-        service_request = service.speech().syncrecognize(
+        service_request = service.speech().recognize(
             body={
                 'config': {
                     'encoding': 'LINEAR16',  # raw 16-bit signed LE samples
-                    'sampleRate': 16000,  # 16 khz
+                    'sampleRateHertz': 16000,  # 16 khz
                     'languageCode': 'en-US',  # a BCP-47 language tag
+                    'enableAutomaticPunctuation': 'true',
                 },
                 'audio': {
                     'content': speech_content.decode('UTF-8')
